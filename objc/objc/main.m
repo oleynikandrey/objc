@@ -53,10 +53,64 @@ void average() {
     NSLog(@"(%d + %d + %d) / 3 = %d", first, second, third, result);
 }
 
+void is_english_letter() {
+    char symbol;
+    
+    printf("Enter symbol: ");
+    scanf(" %c", &symbol);
+    
+    if ((65 <= symbol && symbol <= 90) || (97 <= symbol && symbol <= 122)) {
+        NSLog(@"English alphabet contain '%c'\n", symbol);
+    } else {
+        NSLog(@"English alphabet does not contain '%c'\n", symbol);
+    }
+}
+
+int calculateAddition(int a, int b) {
+    return a + b;
+}
+
+int calculateSubtruction(int a, int b) {
+    return a - b;
+}
+
+int calculateMultiplication(int a, int b) {
+    return a * b;
+}
+
+int calculateDivision(int a, int b) {
+    return a / b;
+}
+
+int calculate(NSString *method, int a, int b) {
+    
+    if ([method isEqualToString:@"+"]) {
+        return calculateAddition(a, b);
+    }
+    else if ([method isEqualToString:@"-"]) {
+        return calculateSubtruction(a, b);
+    }
+    else if ([method isEqualToString:@"*"]) {
+        return calculateMultiplication(a, b);
+    }
+    else if ([method isEqualToString:@"/"]) {
+        return calculateDivision(a, b);
+    }
+    else if ([method isEqualToString:@"%"]) {
+        return a % b;
+    }
+    else {
+        NSLog(@"Функция не знает переданный метод");
+        return 0;
+    }
+    
+    return a + b;
+}
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         int choose;
-        printf("Choose application: 1 - calculator, 2 - average of three: ");
+        printf("Choose application: 1 - calculator, 2 - average of three, 3 - is english letter: ");
         scanf("%d", &choose);
         
         switch (choose) {
@@ -65,6 +119,9 @@ int main(int argc, const char * argv[]) {
                 break;
             case 2:
                 average();
+                break;
+            case 3:
+                is_english_letter();
                 break;
             default:
                 NSLog(@"No such application");
