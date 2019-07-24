@@ -6,6 +6,14 @@ void calculator() {
     char operator;
     int result = 0;
     
+    enum {
+        Add = '+',
+        Subtract = '-',
+        Multiply = '*',
+        Divide = '/'
+    };
+    typedef int Operator;
+    
     printf("First operand: ");
     scanf("%d", &first);
     printf("Operator: ");
@@ -14,16 +22,16 @@ void calculator() {
     scanf("%d", &second);
     
     switch (operator) {
-        case '+':
+        case Add:
             result = first + second;
             break;
-        case '-':
+        case Subtract:
             result = first - second;
             break;
-        case '*':
+        case Multiply:
             result = first * second;
             break;
-        case '/':
+        case Divide:
             result = first / second;
             break;
         default:
@@ -107,10 +115,70 @@ int calculate(NSString *method, int a, int b) {
     return a + b;
 }
 
+void arrayPrinter() {
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    char item[20];
+    
+    printf("Enter array items separated by space and finished by 'nil' keyword: \n");
+    while (true) {
+        getchar();
+        scanf("%s", item);
+
+        NSString *strItem = [NSString stringWithUTF8String:item];
+        
+        if ([strItem  isEqual: @"nil"]) {
+            break;
+        }
+        
+        [arr addObject:strItem];
+    }
+    
+    NSLog(@"Got items from user: \n");
+    for (int i = 0; i < [arr count]; i++) {
+        NSLog(@"%@\n", arr[i]);
+    }
+}
+
+void userStruct() {
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    char name[20];
+    
+    struct User {
+        NSString *name;
+    };
+    typedef struct User User;
+    
+    printf("Enter user names separated by space and finished by 'nil' keyword: \n");
+    while (true) {
+        getchar();
+        scanf("%s", name);
+        
+        NSString *strName = [NSString stringWithUTF8String:name];
+        
+        if ([strName  isEqual: @"nil"]) {
+            break;
+        }
+        
+        User user;
+        user.name = strName;
+        
+        NSValue *value = [NSValue valueWithBytes:&user objCType:@encode(User)];
+        [arr addObject:value];
+    }
+    
+    NSLog(@"Got user names: \n");
+    for (int i = 0; i < [arr count]; i++) {
+        NSValue *value = [arr objectAtIndex:i];
+        User *user = [value pointerValue];
+        NSLog(@"%@\n", user->name);
+    }
+
+}
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         int choose;
-        printf("Choose application: 1 - calculator, 2 - average of three, 3 - is english letter: ");
+        printf("Choose application: 1 - calculator, 2 - average of three, 3 - is english letter, 4 - array printer, 5 - user struct: ");
         scanf("%d", &choose);
         
         switch (choose) {
@@ -122,6 +190,12 @@ int main(int argc, const char * argv[]) {
                 break;
             case 3:
                 is_english_letter();
+                break;
+            case 4:
+                arrayPrinter();
+                break;
+            case 5:
+                userStruct();
                 break;
             default:
                 NSLog(@"No such application");
